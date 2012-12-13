@@ -60,7 +60,8 @@ show_help ()
     -R time         Restore accounts from the nearest backup before the now-time
     -s              Simulation of operations as if they really do
     -t              On incremental backup, do full is not previous incremental
-    -u              On failure of a backup account, does not stop.
+    -u              On failure of a backup account, does not stop
+    -V 	            Filter to ignore accounts.
 
  Usage:
    zmbkpose -d time [-s]
@@ -113,6 +114,10 @@ show_help ()
               from ( now - time ).
            * date_time_mark internal format expresed by "date"
               command using '$DATE_TIME_MARK_FORMAT' format.
+   zmbkpose -V 'name|spam.'
+   	     ignore all accounts than match with the filter, filter uses regex
+   	       * name@domain.com
+   	       * spam.haoscn@domain.com
 
    time FORMAT:
    -----------
