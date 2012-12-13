@@ -114,6 +114,7 @@ show_help ()
               from ( now - time ).
            * date_time_mark internal format expresed by "date"
               command using '$DATE_TIME_MARK_FORMAT' format.
+
    zmbkpose -V 'name|spam.'
    	     ignore all accounts than match with the filter, filter uses regex
    	       * name@domain.com
@@ -969,7 +970,7 @@ while [ -n "$1" ];do
 		;;
 		(-V) #grep fillter
 			[ -z "$2" ] && show_help && exit
-			egrep_filter=${2}
+			egrep_filter="${2}"
 			shift 1
 		;;
 		(-F) #Do a full backup, only if the accounts don't have a full backup from "time"
