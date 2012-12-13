@@ -969,8 +969,8 @@ while [ -n "$1" ];do
 			shift 1
 		;;
 		(-V) #grep fillter
-			[ -z "$2" ] && show_help && exit
-			egrep_filter="${2}"
+			[ ! -z "$2" ] && show_help && exit
+			egrep_filter=${2}
 			shift 1
 		;;
 		(-F) #Do a full backup, only if the accounts don't have a full backup from "time"
