@@ -1059,6 +1059,7 @@ while [ -n "$1" ];do
         (--only-mbox)
             ONLY_MBOX=1
             shift 1
+        ;;
 		(*) #Error
 			error "Incorrect parameters $1. See help."
 			show_help
