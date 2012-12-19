@@ -62,6 +62,7 @@ show_help ()
     -t              On incremental backup, do full is not previous incremental
     -u              On failure of a backup account, does not stop
     -V 	            Filter to ignore accounts.
+    --only-mbox     Only Restore Milabox (no ldap info)
 
  Usage:
    zmbkpose -d time [-s]
@@ -733,13 +734,15 @@ restore_account()
 	#LDAP restore. Only add operation.
 	#I think deletion is not secure implement. Modifications based on the
 	# differences will be quite a challenge. I need you!
-	for dn in $(echo "$ldap_data" |ldif_analysis_get_att dn y);do
-		if ! ldap_dn_exists "$dn" ;then
-			debug "$account - Adding ldap entry: $dn"
-			[ -z "$SIMULATE" ] && \
-				echo "$ldap_data"|ldif_analysis_get_entry "$dn" |ldap_add
-		fi
-	done
+    [ -z $ONLY_MBOX ] && {
+        for dn in $(echo "$ldap_data" |ldif_analysis_get_att dn y);do
+            if ! ldap_dn_exists "$dn" ;then
+                debug "$account - Adding ldap entry: $dn"
+                [ -z "$SIMULATE" ] && \
+                    echo "$ldap_data"|ldif_analysis_get_entry "$dn" |ldap_add
+            fi
+        done
+    }
 
 	#Account type
 	local ac_type;ac_type=$(echo "$ldap_data"| ldif_analysis_account_type)
@@ -1053,6 +1056,9 @@ while [ -n "$1" ];do
 			CONT_ON_ERROR=1
 			shift 1
 		;;
+        (--only-mbox)
+            ONLY_MBOX=1
+            shift 1
 		(*) #Error
 			error "Incorrect parameters $1. See help."
 			show_help
